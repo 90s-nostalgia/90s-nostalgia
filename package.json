@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "90s-nostalgia",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "e-commerce site for some 90s nostalgia!",
   "engines": {
     "node": ">= 7.0.0"
   },

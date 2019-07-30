@@ -3,6 +3,31 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  defaultShipping: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  defaultBilling: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  cart: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+    allowNull: true
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
