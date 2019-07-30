@@ -24,10 +24,6 @@ const User = db.define('user', {
       notEmpty: true
     }
   },
-  cart: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER),
-    allowNull: true
-  },
   email: {
     type: Sequelize.STRING,
     unique: true,
