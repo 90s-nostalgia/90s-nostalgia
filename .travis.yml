@@ -13,16 +13,18 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "90s-nostalgia";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test             # test the code
+  - npm test # test the code
   - npm run build-client # make the bundle
-
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy: # see README for details on these keys
+  # prevents travis from deleting the build
+  skip_cleanup: true
+  provider: heroku
+  # app should be your heroku app name; see README
+  app: nineties-nostalgia
+  # the secure key indicates an encrypted value; see README
+  api_key:
+    secure: DJW6j4PNRUUqnsxdjsMCGuAGn7cV1m5EKXu/tmyDKdb/ctnM6hpmuZdVcFIWnwFBQ2nNanGl1noNSXHoDYhe5VT0PKYklqndT1d5L/1/opB+OYVFUBim9JbxGUl1rCIlGU4xnh1Egw1TQw/YeWaMYcsN8dCS0+xx1/FX3ESm2qL47eCFONhf1goxlWn5ueJKKnRWF+Rnj0liChm0lmjQoMJIjJ72cD6a+zfAYUw4wd+wSveaXrpYcbiv8bm6Q9e+9JrssmC7HNbZ4XKEPY8/mEjyOEhbXLFnUNItSRej526Uz9rad94taW+8CepD4bwMIM0IHijsW3kPukfDAg8REa265ck5jXtL2VjahZSsdf6aq23rfS/+6vyIoFaMf01u5hYXerUBGB9aP0yiIKi6qdor4pvdJtrEnL7E3WBs/w0c5C2+JXI9pM6GWK6Me33u10mhIVmkU5cfMObQf9ZbYTbPJGgC/mbYmSUUt1WEI9FT0mvI3sGqR71dbEaH5zFDCnVvsSFxeW6T0mOBs0jLAsiK4HCcHP27awSaR1XY12ZXCMxzK7i4+7vFpjcKC3lF+ipcudXK5ZCcwHL+6d77OiqHyddkKJH0vhWc4MfAmgyxghQj2BCsLZfuq0H/Cac7KMpaos8OX5djYaB0mYDwJyDhzqRzonKeU5MZfE4PcAA=
