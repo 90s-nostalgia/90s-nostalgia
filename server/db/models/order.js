@@ -11,18 +11,10 @@ const Order = db.define('order', {
     }
   },
   orderShipping: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   },
   orderBilling: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   },
   fulfilled: {
     type: Sequelize.BOOLEAN,
