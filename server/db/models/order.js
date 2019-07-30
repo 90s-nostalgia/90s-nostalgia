@@ -23,6 +23,10 @@ const Order = db.define('order', {
     validate: {
       notEmpty: true
     }
+  },
+  fulfilled: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
