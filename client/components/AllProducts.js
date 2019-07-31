@@ -13,7 +13,7 @@ export class AllProducts extends Component {
       <div>
         {this.props.allProducts
           ? this.props.allProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.name} product={product} />
             ))
           : null}
       </div>
