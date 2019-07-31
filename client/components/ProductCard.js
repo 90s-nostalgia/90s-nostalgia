@@ -7,7 +7,7 @@ const ProductCard = props => {
       <div>
         <img src={props.product.imageUrl} />
         <Link to={'/products/' + props.product.id}>
-          {props.product.name} {props.product.price} {props.product.description}
+          {props.product.name} {props.product.price}
         </Link>
       </div>
     </div>

@@ -27,7 +27,7 @@ const gotAllProducts = allProducts => {
  */
 export const getAllProducts = () => async dispatch => {
   try {
-    const {data} = await axios.get('/products')
+    const {data} = await axios.get('/api/products')
     dispatch(gotAllProducts(data || defaultProduct))
   } catch (err) {
     console.error(err)
