@@ -13,15 +13,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:productId', async (req, res, next) => {
   try {
+    console.log('HI')
+    // const product = await Product.findById(req.params.productId)
     const product = await Product.findOne({
-      attributes: ['name', 'imageUrl', 'price', 'description'],
       where: {
-        id: req.params.id
+        id: req.params.productId
       }
     })
-    res.json(product)
+    if (!product) {
+      res.sendStatus(404)
+    } else {
+      res.json(product)
+    }
   } catch (err) {
     next(err)
   }
