@@ -14,6 +14,7 @@ const Product = db.define('product', {
     defaultValue: 'placeholder.jpeg'
   },
   price: {
+    //need to change type to integer
     type: Sequelize.DECIMAL,
     allowNull: false,
     validate: {
