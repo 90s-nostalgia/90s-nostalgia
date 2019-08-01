@@ -28,8 +28,8 @@ const addedToOrder = newOrder => {
 
 export const addToOrder = (productId, userId) => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/users/${userId}/orders`, userId)
-    dispatch(addedToOrder(data || defaultOrder))
+    const {data} = await axios.put(`/api/users/${userId}/orders`, {productId})
+    dispatch(addedToOrder(data))
   } catch (err) {
     console.error(err)
   }
