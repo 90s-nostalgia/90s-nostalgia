@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Order} = require('../db/models')
+const {User, Order, OrderProduct} = require('../db/models')
 module.exports = router
 
 // router.use('/:id/orders', require('./orders'))
@@ -40,7 +40,13 @@ router.put('/:id/orders', async (req, res, next) => {
         fulfilled: false
       }
     })
-    res.status(201).send(newOrder)
+    //this can work for adding to the cart one time, the next time you try to addto cart it says orderProducts has a validation of needing a unique order id and product id. so we need to do something that handles quantity
+    let orderProductInstance = await OrderProduct.create({
+      orderId: newOrder[0].dataValues.id,
+      productId: req.body.productId
+    })
+
+    res.status(201).send(orderProductInstance)
   } catch (error) {
     next(error)
   }
