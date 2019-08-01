@@ -17,8 +17,11 @@ export class SingleProduct extends Component {
 
   handleClick(event) {
     const productId = this.props.match.params.productId
+    const userId = this.props.userId
     event.preventDefault()
-    this.props.addToOrder(productId, this.props.userId)
+    this.props.addToOrder(productId, userId)
+
+
   }
 
   render() {
@@ -42,8 +45,8 @@ export class SingleProduct extends Component {
 const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
-    userId: state.user.id //this needs to change
-    // orders: state.order.orders might not need this, currently []
+    userId: state.user.id
+
   }
 }
 
@@ -51,7 +54,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const productId = ownProps.match.params.productId
   return {
     getSingleProduct: () => dispatch(getSingleProduct(productId)),
-    addToOrder: () => dispatch(addToOrder(productId))
+    addToOrder: userId => dispatch(addToOrder(productId, userId))
   }
 }
 
