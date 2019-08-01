@@ -31,14 +31,14 @@ const products = [
     name: 'Tamagotchi',
     imageUrl:
       'https://target.scene7.com/is/image/Target/GUEST_db777eca-8f58-4929-a40d-1314919fe36e?wid=488&hei=488&fmt=webp',
-    price: 19.99,
+    price: 2000,
     description: 'a handheld virtual pet'
   },
   {
     name: 'Kush Ball',
     imageUrl:
       'https://www.sensationalkids.ie/wp-content/uploads/2017/08/009398_3-1.jpg',
-    price: 2.95,
+    price: 295,
     description:
       "It's the Koosh Ball - named for the sound it makes when it hits your hand."
   },
@@ -46,7 +46,7 @@ const products = [
     name: 'Furby',
     imageUrl:
       'https://apennyformychildishthoughts.files.wordpress.com/2012/03/furby.jpg',
-    price: 33.95,
+    price: 3395,
     description:
       'A newly purchased Furby starts out speaking entirely "Furbish", the unique language that all Furbies use, but is programmed to start using English words and phrases in place of Furbish over time.'
   }
