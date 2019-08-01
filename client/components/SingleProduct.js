@@ -20,8 +20,6 @@ export class SingleProduct extends Component {
     const userId = this.props.userId
     event.preventDefault()
     this.props.addToOrder(productId, userId)
-
-
   }
 
   render() {
@@ -46,15 +44,13 @@ const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
     userId: state.user.id
-
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  const productId = ownProps.match.params.productId
+const mapDispatchToProps = dispatch => {
   return {
-    getSingleProduct: () => dispatch(getSingleProduct(productId)),
-    addToOrder: userId => dispatch(addToOrder(productId, userId))
+    getSingleProduct: productId => dispatch(getSingleProduct(productId)),
+    addToOrder: (productId, userId) => dispatch(addToOrder(productId, userId))
   }
 }
 
