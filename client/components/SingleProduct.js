@@ -28,7 +28,11 @@ export class SingleProduct extends Component {
         {this.props.singleProduct ? (
           <img src={this.props.singleProduct.imageUrl} />
         ) : null}
-        <button type="button" onClick={this.handleClick}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={this.handleClick}
+        >
           Add to cart
         </button>
       </div>
