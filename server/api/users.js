@@ -2,6 +2,8 @@ const router = require('express').Router()
 const {User, Order} = require('../db/models')
 module.exports = router
 
+// router.use('/:id/orders', require('./orders'))
+
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -30,26 +32,28 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.put('/:id/orders', async (req, res, next) => {
+  try {
+    console.log('New Order:', req.params.id)
+
+    let newOrder = await Order.findOrCreate({
+      where: {
+        userId: req.params.id,
+        fulfilled: false
+      }
+    })
+    res.status(201).send(newOrder)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/:id/history', async (req, res, next) => {
   try {
     const user = await Order.findAll({
       where: {
         userId: req.params.id,
         fulfilled: true
-      }
-    })
-    res.json(user)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get('/:id/cart', async (req, res, next) => {
-  try {
-    const user = await Order.findAll({
-      where: {
-        userId: req.params.id,
-        fulfilled: false
       }
     })
     res.json(user)

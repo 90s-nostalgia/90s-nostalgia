@@ -9,10 +9,11 @@ export class AllProducts extends Component {
   }
 
   render() {
+    const allProducts = this.props.allProducts
     return (
       <div>
-        {this.props.allProducts
-          ? this.props.allProducts.map(product => (
+        {allProducts
+          ? allProducts.map(product => (
               <ProductCard key={product.name} product={product} />
             ))
           : null}
