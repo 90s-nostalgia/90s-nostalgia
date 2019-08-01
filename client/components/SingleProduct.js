@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getSingleProduct} from '../store/product'
 import {addToOrder} from '../store/order'
-import {me} from '../store/user'
 import {Link} from 'react-router-dom'
 
 export class SingleProduct extends Component {
@@ -14,14 +13,13 @@ export class SingleProduct extends Component {
   componentDidMount() {
     const productId = this.props.match.params.productId
     this.props.getSingleProduct(productId)
-    this.props.me()
-    console.log('these are the props', this.props)
   }
 
   handleClick(event) {
     const productId = this.props.match.params.productId
+    const userId = this.props.userId
     event.preventDefault()
-    this.props.addToOrder(productId, 1)
+    this.props.addToOrder(productId, userId)
   }
 
   render() {
@@ -44,8 +42,7 @@ export class SingleProduct extends Component {
 const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
-    user: state.user.userId //this needs to change
-    // orders: state.order.orders might not need this, currently []
+    userId: state.user.id
   }
 }
 
@@ -53,8 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const productId = ownProps.match.params.productId
   return {
     getSingleProduct: () => dispatch(getSingleProduct(productId)),
-    addToOrder: () => dispatch(addToOrder(productId)),
-    me: () => dispatch(me())
+    addToOrder: userId => dispatch(addToOrder(productId, userId))
   }
 }
 
