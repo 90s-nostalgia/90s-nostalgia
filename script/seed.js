@@ -3,7 +3,7 @@
 const db = require('../server/db')
 const {User} = require('../server/db/models')
 const {Product} = require('../server/db/models')
-const {Order} = require('../server/db/models')
+// const {Order} = require('../server/db/models')
 
 const users = [
   {
@@ -49,29 +49,69 @@ const products = [
     price: 3395,
     description:
       'A newly purchased Furby starts out speaking entirely "Furbish", the unique language that all Furbies use, but is programmed to start using English words and phrases in place of Furbish over time.'
+  },
+  {
+    name: 'Pogs',
+    imageUrl:
+      'https://i.etsystatic.com/17817890/r/il/cb66b0/1935801901/il_1588xN.1935801901_ni97.jpg',
+    price: 200,
+    description: 'POGs are the old-fashioned game of the future.'
+  },
+  {
+    name: 'Beanie Babies',
+    imageUrl: 'http://www.tycollector.com/beanies/bb-images/snort-4002.jpg',
+    price: 500,
+    description: 'Beans", making them "beanie".'
+  },
+  {
+    name: 'Skip-It',
+    imageUrl: 'https://i.redd.it/cnr85gneoue01.jpg',
+    price: 2500,
+    description: 'The very best thing of all, there’s a counter on this ball!'
+  },
+  {
+    name: 'Moon Shoes',
+    imageUrl:
+      'https://images.lillianvernon.com/catalog/product/450x450/71364/71364_lv741.jpg',
+    price: 4000,
+    description: 'Pure fun. Anti-gravity bounce develops balance, agility.'
+  },
+  {
+    name: 'Blockbuster Rewards Card',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/4/46/Blockbuster_logo.svg',
+    price: 2000,
+    description: 'Never be without a movie.'
+  },
+  {
+    name: 'Little Mermaid on VHS',
+    imageUrl: 'https://usercontent2.hubstatic.com/8320065.jpg',
+    price: 1995,
+    description:
+      'Somewhere under the sea and beyond your imagination is an adventure in fantasy.'
   }
 ]
 
 const orders = [
-  {
-    items: [1, 2, 2, 2, 3],
-    orderShipping: 'Maryland',
-    orderBilling: 'Maryland',
-    fulfilled: true
-  },
-  {
-    items: [3, 2],
-    orderShipping: 'New Hampshire',
-    orderBilling: 'Vermont',
-    fulfilled: false
-  },
-  {
-    items: [1],
-    orderShipping: 'New Hampshire',
-    orderBilling: 'Vermont',
-    fulfilled: true
-    // userId: 80
-  }
+  // {
+  //   items: [1, 2, 2, 2, 3],
+  //   orderShipping: 'Maryland',
+  //   orderBilling: 'Maryland',
+  //   fulfilled: true
+  // },
+  // {
+  //   items: [3, 2],
+  //   orderShipping: 'New Hampshire',
+  //   orderBilling: 'Vermont',
+  //   fulfilled: false
+  // },
+  // {
+  //   items: [1],
+  //   orderShipping: 'New Hampshire',
+  //   orderBilling: 'Vermont',
+  //   fulfilled: true
+  //   // userId: 80
+  // }
 ]
 
 async function seed() {
@@ -90,11 +130,11 @@ async function seed() {
     })
   )
 
-  await Promise.all(
-    orders.map(order => {
-      return Order.create(order)
-    })
-  )
+  // await Promise.all(
+  //   orders.map(order => {
+  //     return Order.create(order)
+  //   })
+  // )
 
   console.log(
     `seeded ${users.length} users, ${products.length} products, and ${
