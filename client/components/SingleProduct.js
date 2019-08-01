@@ -20,9 +20,12 @@ export class SingleProduct extends Component {
     const userId = this.props.userId
     event.preventDefault()
     this.props.addToOrder(productId, userId)
+
+
   }
 
   render() {
+    console.log('these are the props', this.props)
     const singleProduct = this.props.singleProduct
     return (
       <div>
@@ -43,6 +46,7 @@ const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
     userId: state.user.id
+
   }
 }
 
