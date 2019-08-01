@@ -28,20 +28,14 @@ export class SingleProduct extends Component {
     const singleProduct = this.props.singleProduct
     return (
       <div>
-        {this.props.singleProduct ? (
-          <img src={this.props.singleProduct.imageUrl} />
-        ) : null}
+        {singleProduct ? <img src={singleProduct.imageUrl} /> : null}
         <button
           type="button"
           className="btn btn-primary"
           onClick={this.handleClick}
         >
-          Add to cart
-        {singleProduct ? <img src={singleProduct.imageUrl} /> : null}
-//         <button type="button" onClick={this.handleClick}>
-//           Add To Cart
-// >>>>>>> master
-//         </button>
+          Add To Cart
+        </button>
       </div>
     )
   }
