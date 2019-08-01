@@ -11,12 +11,14 @@ export class AllProducts extends Component {
   render() {
     const allProducts = this.props.allProducts
     return (
-      <div>
-        {allProducts
-          ? allProducts.map(product => (
-              <ProductCard key={product.name} product={product} />
-            ))
-          : null}
+      <div className="container">
+        <div className="row">
+          {allProducts
+            ? allProducts.map(product => (
+                <ProductCard key={product.name} product={product} />
+              ))
+            : null}
+        </div>
       </div>
     )
   }
