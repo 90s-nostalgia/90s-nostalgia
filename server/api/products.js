@@ -5,7 +5,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      attributes: ['name', 'imageUrl', 'price']
+      attributes: ['name', 'imageUrl', 'price', 'id']
     })
     res.json(products)
   } catch (err) {
@@ -15,8 +15,6 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:productId', async (req, res, next) => {
   try {
-    console.log('HI')
-    // const product = await Product.findById(req.params.productId)
     const product = await Product.findOne({
       where: {
         id: req.params.productId
@@ -32,12 +30,15 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
-router.post('/:id/add', async (req, res, next) => {
+router.post('/:productId', async (req, res, next) => {
   try {
-    let createfirstCart = await Order.create({
-      items: [req.params.id]
+    console.log('New Order:')
+
+    let newOrder = await Order.create({
+      fulfilled: false
+      // userId: req.session.id
     })
-    res.status(201).send(createfirstCart)
+    res.status(201).send(newOrder)
   } catch (error) {
     next(error)
   }
