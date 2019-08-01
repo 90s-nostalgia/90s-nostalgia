@@ -26,10 +26,12 @@ const addedToOrder = newOrder => {
  * THUNK CREATORS
  */
 
-export const addToOrder = productId => {
-  return async dispatch => {
-    const res = await axios.post(`/api/products/${productId}`)
-    dispatch(addedToOrder(res.data))
+export const addToOrder = (productId, userId) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/users/${userId}/orders`)
+    dispatch(addedToOrder(data || defaultOrder))
+  } catch (err) {
+    console.error(err)
   }
 }
 
