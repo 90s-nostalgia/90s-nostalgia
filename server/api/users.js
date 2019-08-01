@@ -34,11 +34,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id/orders', async (req, res, next) => {
   try {
-    console.log('New Order:', req.params.id)
-
     let newOrder = await Order.findOrCreate({
       where: {
-        userId: req.params.id,
+        userId: req.user.id,
         fulfilled: false
       }
     })
