@@ -31,22 +31,41 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
-
+//this can work for adding to the cart one time, the next time you try to addto cart
+// it says orderProducts has a validation of needing a unique order id and product id.
+// so we need to do something that handles quantity
 router.put('/:id/orders', async (req, res, next) => {
   try {
+    // checks if user already has an unfulfilled cart
     let newOrder = await Order.findOrCreate({
       where: {
         userId: req.user.id,
         fulfilled: false
       }
     })
-    //this can work for adding to the cart one time, the next time you try to addto cart it says orderProducts has a validation of needing a unique order id and product id. so we need to do something that handles quantity
-    let orderProductInstance = await OrderProduct.create({
-      orderId: newOrder[0].dataValues.id,
-      productId: req.body.productId
+    // checks if productId is already in order
+    const isOrderProduct = await OrderProduct.findOne({
+      where: {
+        orderId: newOrder[0].dataValues.id,
+        productId: req.body.productId
+      }
     })
-
-    res.status(201).send(orderProductInstance)
+    // if not in order, add to order
+    if (!isOrderProduct) {
+      const newOrderProductInstance = await OrderProduct.create({
+        orderId: newOrder[0].dataValues.id,
+        productId: req.body.productId,
+        quantity: 1
+      })
+      res.status(201).json(newOrderProductInstance)
+      // if the product already is in the order, increment quantity by 1
+    } else {
+      const incrementedQuantity = isOrderProduct.quantity + 1
+      const updatedOrderProductInstance = await isOrderProduct.update({
+        quantity: incrementedQuantity
+      })
+      res.json(updatedOrderProductInstance)
+    }
   } catch (error) {
     next(error)
   }
