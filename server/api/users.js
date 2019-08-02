@@ -76,6 +76,9 @@ router.get('/:id/orders', async (req, res, next) => {
       where: {
         userId: req.user.id,
         fulfilled: false
+      },
+      include: {
+        model: OrderProduct
       }
     })
     res.json(unfulfilledOrder)
