@@ -37,7 +37,7 @@ const gotSingleProduct = singleProduct => {
 export const getAllProducts = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/products')
-    dispatch(gotAllProducts(data || defaultProduct))
+    dispatch(gotAllProducts(data))
   } catch (err) {
     console.error(err)
   }

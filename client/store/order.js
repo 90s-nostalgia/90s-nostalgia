@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const ADDED_TO_ORDER = 'ADDED_TO_ORDER'
+const GOT_UNFULFILLED_ORDER = 'GOT_UNFULFILLED_ORDER'
 
 /**
  * INITIAL STATE
@@ -19,6 +20,12 @@ const addedToOrder = newOrder => {
   return {
     type: ADDED_TO_ORDER,
     newOrder
+  }
+}
+const gotUnfufilledOrder = unfufilledOrder => {
+  return {
+    type: GOT_UNFULFILLED_ORDER,
+    unfufilledOrder
   }
 }
 
