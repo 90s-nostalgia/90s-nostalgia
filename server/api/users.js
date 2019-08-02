@@ -41,6 +41,7 @@ router.put('/:id/orders', async (req, res, next) => {
       }
     })
     //this can work for adding to the cart one time, the next time you try to addto cart it says orderProducts has a validation of needing a unique order id and product id. so we need to do something that handles quantity
+
     let orderProductInstance = await OrderProduct.create({
       orderId: newOrder[0].dataValues.id,
       productId: req.body.productId
