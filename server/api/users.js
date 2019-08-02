@@ -37,7 +37,7 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id/orders', async (req, res, next) => {
   try {
     // checks if user already has an unfulfilled cart
-    let newOrder = await Order.findOrCreate({
+    const newOrder = await Order.findOrCreate({
       where: {
         userId: req.user.id,
         fulfilled: false
@@ -68,6 +68,21 @@ router.put('/:id/orders', async (req, res, next) => {
     }
   } catch (error) {
     next(error)
+  }
+})
+
+router.get('/:id/orders', async (req, res, next) => {
+  try {
+    // checks if user already has an unfulfilled cart
+    const unfulfilledOrder = await Order.findAll({
+      where: {
+        userId: req.user.id,
+        fulfilled: false
+      }
+    })
+    res.json(unfulfilledOrder)
+  } catch (err) {
+    next(err)
   }
 })
 
