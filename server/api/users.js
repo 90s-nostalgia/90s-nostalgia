@@ -31,9 +31,7 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
-//this can work for adding to the cart one time, the next time you try to addto cart
-// it says orderProducts has a validation of needing a unique order id and product id.
-// so we need to do something that handles quantity
+
 router.put('/:id/orders', async (req, res, next) => {
   try {
     // checks if user already has an unfulfilled cart
