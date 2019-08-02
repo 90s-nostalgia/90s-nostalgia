@@ -8,6 +8,7 @@ Order.belongsTo(User)
 
 Order.belongsToMany(Product, {through: OrderProduct})
 Product.belongsToMany(Order, {through: OrderProduct, as: 'items'})
+// OrderProduct.belongsToMany(Order, {through: OrderProduct})
 
 module.exports = {
   User,
