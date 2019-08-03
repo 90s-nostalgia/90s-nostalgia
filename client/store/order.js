@@ -10,7 +10,7 @@ const GOT_UNFULFILLED_ORDER = 'GOT_UNFULFILLED_ORDER'
  * INITIAL STATE
  */
 const defaultOrder = {
-  orders: []
+  unfulfilledOrder: []
 }
 
 /**
@@ -22,10 +22,10 @@ const addedToOrder = newOrder => {
     newOrder
   }
 }
-const gotUnfufilledOrder = unfufilledOrder => {
+const gotUnfulfilledOrder = unfulfilledOrder => {
   return {
     type: GOT_UNFULFILLED_ORDER,
-    unfufilledOrder
+    unfulfilledOrder
   }
 }
 
@@ -42,13 +42,27 @@ export const addToOrder = (productId, userId) => async dispatch => {
   }
 }
 
+export const getUnfulfilledOrder = userId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/users/${userId}/orders`)
+    dispatch(gotUnfulfilledOrder(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
 export default function(state = defaultOrder, action) {
   switch (action.type) {
     case ADDED_TO_ORDER:
-      return {...state, orders: [...state.orders, action.newOrder]}
+      return {
+        ...state,
+        unfulfilledOrder: [...state.unfulfilledOrder, action.newOrder]
+      }
+    case GOT_UNFULFILLED_ORDER:
+      return {...state, unfulfilledOrder: action.unfulfilledOrder}
     default:
       return state
   }
