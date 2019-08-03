@@ -1,38 +1,57 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {getUnfulfilledOrder} from '../store/order'
-import {Link} from 'react-router-dom'
+// import {connect} from 'react-redux'
+// import {getUnfulfilledOrder} from '../store/order'
+// import {Link} from 'react-router-dom'
+import CartProductCard from './CartProductCard'
 
-export class UnfulfilledOrder extends Component {
-  componentDidMount() {
-    const userId = this.props.match.params.userId
-    this.props.getUnfulfilledOrder(userId)
-  }
-
-  render() {
-    const unfulfilledOrder = this.props.unfulfilledOrder
-    console.log(unfulfilledOrder)
-
-    return (
+const UnfulfilledOrder = props => {
+  const products = props.order.products
+  console.log(products)
+  return (
+    <div key={products.id}>
       <div>
-        <h1>Cart</h1>
-        {/* {singleProduct ? <img src={singleProduct.imageUrl} /> : null} */}
-        {unfulfilledOrder ? <h1>{unfulfilledOrder.id}</h1> : null}
+        {products
+          ? products.map(product => (
+              <CartProductCard key={product.name} product={product} />
+            ))
+          : null}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-    unfulfilledOrder: state.order.unfulfilledOrder
-  }
-}
+export default UnfulfilledOrder
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getUnfulfilledOrder: userId => dispatch(getUnfulfilledOrder(userId))
-  }
-}
+// export class UnfulfilledOrder extends Component {
+//   componentDidMount() {
+//     console.log(this.props)
+//     const userId = this.props.userId
+//     this.props.getUnfulfilledOrder(userId)
+//   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnfulfilledOrder)
+//   render() {
+//     const unfulfilledOrder = this.props.unfulfilledOrder
+//     console.log(unfulfilledOrder)
+
+//     return (
+//       <div>
+//         <h1>Cart</h1>
+//         {unfulfilledOrder ? <h1>'hi'</h1> : null}
+//       </div>
+//     )
+//   }
+// }
+
+// const mapStateToProps = state => {
+//   return {
+//     unfulfilledOrder: state.order.unfulfilledOrder
+//   }
+// }
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getUnfulfilledOrder: userId => dispatch(getUnfulfilledOrder(userId))
+//   }
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(UnfulfilledOrder)

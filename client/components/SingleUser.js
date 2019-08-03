@@ -1,17 +1,24 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../store/user-for-user'
-import {Link} from 'react-router-dom'
+import {getUnfulfilledOrder} from '../store/order'
+// import {Link} from 'react-router-dom'
+import UnfulfilledOrder from './UnfulfilledOrder'
 
 export class SingleUser extends Component {
   constructor() {
     super()
+    this.state = {
+      showCart: false
+    }
     this.handleClick = this.handleClick.bind(this)
+    this.showCart = this.showCart.bind(this)
   }
 
   componentDidMount() {
     const userId = this.props.match.params.userId
     this.props.getSingleUser(userId)
+    this.props.getUnfulfilledOrder(userId)
   }
 
   handleClick(event) {
@@ -19,6 +26,13 @@ export class SingleUser extends Component {
     event.preventDefault()
     this.props.getSingleUser(userId)
     //this is going to change so that it fires a getCart thunk
+  }
+
+  showCart() {
+    const currentShowCart = this.state.showCart
+    this.setState({
+      showCart: !currentShowCart
+    })
   }
 
   render() {
@@ -39,10 +53,15 @@ export class SingleUser extends Component {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={this.handleClick}
+          onClick={this.showCart}
         >
           View Cart
         </button>
+        <pre>
+          {this.state.showCart ? (
+            <UnfulfilledOrder order={this.props.unfulfilledOrder[0]} />
+          ) : null}
+        </pre>
       </div>
     )
   }
@@ -51,13 +70,15 @@ export class SingleUser extends Component {
 const mapStateToProps = state => {
   return {
     singleUser: state.singleUser,
-    userId: state.user.id
+    userId: state.user.id,
+    unfulfilledOrder: state.order.unfulfilledOrder
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleUser: anonymousData => dispatch(getSingleUser(anonymousData))
+    getSingleUser: anonymousData => dispatch(getSingleUser(anonymousData)),
+    getUnfulfilledOrder: userId => dispatch(getUnfulfilledOrder(userId))
   }
 }
 
