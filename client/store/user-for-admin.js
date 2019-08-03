@@ -1,14 +1,11 @@
 import axios from 'axios'
 
-//initial state?
-
 const defaultUsers = {
   allUsers: [],
   singleUser: {}
 }
 
 const GOT_ALL_USERS = 'GOT_ALL_USERS'
-//eventually do the same for got single user
 
 const gotAllUsers = allUsers => {
   return {

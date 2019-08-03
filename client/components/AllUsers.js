@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {getAllUsers} from '../store/user-for-admin'
 
 export class AllUsers extends Component {
@@ -15,7 +16,9 @@ export class AllUsers extends Component {
           {allUsers
             ? allUsers.map(user => (
                 <div key={user.id}>
-                  {user.email} {user.id} {user.name}
+                  <Link to={`/users/${user.id}`}>
+                    {user.email} {user.name}
+                  </Link>
                 </div>
               ))
             : null}
