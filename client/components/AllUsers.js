@@ -17,7 +17,7 @@ export class AllUsers extends Component {
             ? allUsers.map(user => (
                 <div key={user.id}>
                   <Link to={`/users/${user.id}`}>
-                    {user.email} {user.name}
+                    {user.name} {user.email}
                   </Link>
                 </div>
               ))
