@@ -30,7 +30,7 @@ router.get('/:id', async (req, res, next) => {
     const user = await User.findOne({
       attributes: ['name', 'email', 'defaultShipping', 'defaultBilling'],
       where: {
-        id: req.params.id
+        id: req.user.id
       }
     })
     res.json(user)
