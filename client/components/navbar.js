@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+// eslint-disable-next-line no-extra-boolean-cast
 
-const Navbar = ({handleClick, isLoggedIn}) => {
-  // console.log(state.user.id)
+const Navbar = ({handleClick, userId}) => {
   return (
     <div>
       <nav className="navbar-expand-sm navbar-dark bg-primary">
         <Link to="/" className="navbar-brand">
           90s Nostalgia
         </Link>
-        {isLoggedIn ? (
+        {userId ? (
           <div className="navbar-nav">
             {/* The navbar will show these links after you log in */}
             <Link to="/home" className="nav-item nav-link">
@@ -37,7 +37,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
           <Link to="/products" className="nav-item nav-link">
             All Products
           </Link>
-          <Link to="/user" className="nav-item nav-link">
+          <Link to={`/user/${userId}/orders`} className="nav-item nav-link">
             Cart
           </Link>
         </div>
@@ -51,7 +51,8 @@ const Navbar = ({handleClick, isLoggedIn}) => {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    // isLoggedIn: !!state.user.id
+    userId: state.user.id
   }
 }
 
@@ -70,5 +71,5 @@ export default connect(mapState, mapDispatch)(Navbar)
  */
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  userId: PropTypes.number.isRequired
 }

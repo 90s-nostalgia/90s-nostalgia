@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {getSingleProduct} from '../store/product'
 import {addToOrder} from '../store/order'
 import {Link} from 'react-router-dom'
+import {removeFromOrder} from '../store/order'
 
 export class SingleProduct extends Component {
   constructor() {
@@ -14,7 +15,7 @@ export class SingleProduct extends Component {
     const productId = this.props.match.params.productId
     this.props.getSingleProduct(productId)
   }
-
+  // remove userId
   handleClick(event) {
     const productId = this.props.match.params.productId
     const userId = this.props.userId
@@ -33,7 +34,15 @@ export class SingleProduct extends Component {
           className="btn btn-primary"
           onClick={this.handleClick}
         >
-          Add To Cart
+          Add
+        </button>
+
+        <button
+          type="button"
+          className="btn-primary"
+          onClick={this.handleClick}
+        >
+          Remove
         </button>
       </div>
     )

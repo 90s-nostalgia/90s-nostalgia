@@ -1,8 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-const ProductCard = props => {
-  const product = props.product
+const ProductCard = ({product}) => {
   return (
     <div key={product.id}>
       <div className="col-sm">

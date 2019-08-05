@@ -2,17 +2,16 @@ import React, {Component} from 'react'
 // import {connect} from 'react-redux'
 // import {getUnfulfilledOrder} from '../store/order'
 // import {Link} from 'react-router-dom'
-import CartProductCard from './CartProductCard'
+import CartItem from './CartItem'
 
-const UnfulfilledOrder = props => {
+const Cart = props => {
   const products = props.order.products
-  console.log(products)
   return (
     <div key={products.id}>
       <div>
         {products
           ? products.map(product => (
-              <CartProductCard key={product.name} product={product} />
+              <CartItem key={product.name} product={product} />
             ))
           : null}
       </div>
@@ -20,7 +19,7 @@ const UnfulfilledOrder = props => {
   )
 }
 
-export default UnfulfilledOrder
+export default Cart
 
 // export class UnfulfilledOrder extends Component {
 //   componentDidMount() {

@@ -43,7 +43,7 @@ router.get(
       next(err)
     }
   }
-)
+})
 
 router.put(
   '/:id/orders',
