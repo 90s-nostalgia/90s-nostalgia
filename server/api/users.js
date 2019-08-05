@@ -41,6 +41,7 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id/orders', async (req, res, next) => {
   try {
     // checks if user already has an unfulfilled cart
+    console.log(req.user)
     const newOrder = await Order.findOrCreate({
       where: {
         userId: req.user.id,
