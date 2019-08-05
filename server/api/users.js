@@ -17,7 +17,8 @@ router.get(
         // send everything to anyone who asks!
         attributes: ['id', 'name', 'email']
       })
-      res.json(users)
+      console.log('***', res.body)
+      res.status(200).send(users)
     } catch (err) {
       next(err)
     }
