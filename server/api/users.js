@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User, Order, OrderProduct, Product} = require('../db/models')
+const adminPrivileges = require('../admin/utils')
 module.exports = router
 
 // router.use('/:id/orders', require('./orders'))
@@ -17,7 +18,6 @@ router.get(
         // send everything to anyone who asks!
         attributes: ['id', 'name', 'email']
       })
-      console.log('***', res.body)
       res.status(200).send(users)
     } catch (err) {
       next(err)
@@ -25,123 +25,110 @@ router.get(
   }
 )
 
-router.get('/:id', async (req, res, next) => {
-  try {
-    const user = await User.findOne({
-      attributes: ['name', 'email', 'defaultShipping', 'defaultBilling'],
-      where: {
-        id: req.user.id
-      }
-    })
-    res.json(user)
-  } catch (err) {
-    next(err)
-  }
-})
-// user/id/cart
-router.put('/:id/orders/add', async (req, res, next) => {
-  try {
-    // checks if user already has an unfulfilled cart
-    const newOrder = await Order.findOrCreate({
-      where: {
-        userId: req.user.id,
-        fulfilled: false
-      }
-    })
-    // checks if productId is already in order
-    const isOrderProduct = await OrderProduct.findOne({
-      where: {
-        orderId: newOrder[0].dataValues.id,
-        productId: req.body.productId
-      }
-    })
-    // if not in order, add to order
-    if (!isOrderProduct) {
-      const newOrderProductInstance = await OrderProduct.create({
-        orderId: newOrder[0].dataValues.id,
-        productId: req.body.productId,
-        quantity: 1
+router.get(
+  '/:id',
+  (req, res, next) => {
+    if (req.user.isAdmin || req.user.id == req.params.id) next()
+  },
+  async (req, res, next) => {
+    try {
+      const user = await User.findOne({
+        attributes: ['name', 'email', 'defaultShipping', 'defaultBilling'],
+        where: {
+          id: req.params.id
+        }
       })
-      res.status(201).json(newOrderProductInstance)
-      // if the product already is in the order, increment quantity by 1
-    } else {
-      const incrementedQuantity = isOrderProduct.quantity + 1
-      const updatedOrderProductInstance = await isOrderProduct.update({
-        quantity: incrementedQuantity
-      })
-      res.json(updatedOrderProductInstance)
+      res.json(user)
+    } catch (err) {
+      next(err)
     }
-  } catch (error) {
-    next(error)
   }
 })
 
-router.put('/:id/orders/remove', async (req, res, next) => {
-  try {
-    console.log('hi')
-    // checks if user already has an unfulfilled cart
-    const newOrder = await Order.findOrCreate({
-      where: {
-        userId: req.user.id,
-        fulfilled: false
-      }
-    })
-    // checks if productId is already in order
-    const isOrderProduct = await OrderProduct.findOne({
-      where: {
-        orderId: newOrder[0].dataValues.id,
-        productId: req.body.productId
-      }
-    })
-    // if not in order, add to order
-    if (!isOrderProduct) {
-      const newOrderProductInstance = await OrderProduct.create({
-        orderId: newOrder[0].dataValues.id,
-        productId: req.body.productId,
-        quantity: 1
+router.put(
+  '/:id/orders',
+  (req, res, next) => {
+    if (req.user.isAdmin || req.user.id == req.params.id) next()
+  },
+  async (req, res, next) => {
+    try {
+      // checks if user already has an unfulfilled cart
+      console.log(req.user)
+      const newOrder = await Order.findOrCreate({
+        where: {
+          userId: req.user.id,
+          fulfilled: false
+        }
       })
-      res.status(201).json(newOrderProductInstance)
-      // if the product already is in the order, increment quantity by 1
-    } else {
-      const incrementedQuantity = isOrderProduct.quantity + 1
-      const updatedOrderProductInstance = await isOrderProduct.update({
-        quantity: incrementedQuantity
+      // checks if productId is already in order
+      const isOrderProduct = await OrderProduct.findOne({
+        where: {
+          orderId: newOrder[0].dataValues.id,
+          productId: req.body.productId
+        }
       })
-      res.json(updatedOrderProductInstance)
+      // if not in order, add to order
+      if (!isOrderProduct) {
+        const newOrderProductInstance = await OrderProduct.create({
+          orderId: newOrder[0].dataValues.id,
+          productId: req.body.productId,
+          quantity: 1
+        })
+        res.status(201).json(newOrderProductInstance)
+        // if the product already is in the order, increment quantity by 1
+      } else {
+        const incrementedQuantity = isOrderProduct.quantity + 1
+        const updatedOrderProductInstance = await isOrderProduct.update({
+          quantity: incrementedQuantity
+        })
+        res.json(updatedOrderProductInstance)
+      }
+    } catch (error) {
+      next(error)
     }
-  } catch (error) {
-    next(error)
   }
-})
+)
 
-router.get('/:id/orders', async (req, res, next) => {
-  try {
-    // checks if user already has an unfulfilled cart
-    const unfulfilledOrder = await Order.findAll({
-      where: {
-        userId: req.user.id,
-        fulfilled: false
-      },
-      include: {
-        model: Product
-      }
-    })
-    res.json(unfulfilledOrder)
-  } catch (err) {
-    next(err)
+router.get(
+  '/:id/orders',
+  (req, res, next) => {
+    if (req.user.isAdmin || req.user.id == req.params.id) next()
+  },
+  async (req, res, next) => {
+    try {
+      // checks if user already has an unfulfilled cart
+      const unfulfilledOrder = await Order.findAll({
+        where: {
+          userId: req.user.id,
+          fulfilled: false
+        },
+        include: {
+          model: Product
+        }
+      })
+      res.json(unfulfilledOrder)
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)
 
-router.get('/:id/history', async (req, res, next) => {
-  try {
-    const user = await Order.findAll({
-      where: {
-        userId: req.params.id,
-        fulfilled: true
-      }
-    })
-    res.json(user)
-  } catch (err) {
-    next(err)
+router.get(
+  '/:id/history',
+  (req, res, next) => {
+    if (req.user.isAdmin || req.user.id == req.params.id) next()
+  },
+  async (req, res, next) => {
+    try {
+      const user = await Order.findAll({
+        where: {
+          userId: req.params.id,
+          fulfilled: true
+        }
+      })
+      res.json(user)
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)
