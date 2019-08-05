@@ -25,8 +25,6 @@ router.get(
   }
 )
 
-
-
 router.get(
   '/:id',
   (req, res, next) => {
@@ -37,7 +35,7 @@ router.get(
       const user = await User.findOne({
         attributes: ['name', 'email', 'defaultShipping', 'defaultBilling'],
         where: {
-          id: req.user.id
+          id: req.params.id
         }
       })
       res.json(user)
