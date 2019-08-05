@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const ADDED_TO_ORDER = 'ADDED_TO_ORDER'
+const REMOVED_FROM_ORDER = 'REMOVED_FROM_ORDER'
 const GOT_UNFULFILLED_ORDER = 'GOT_UNFULFILLED_ORDER'
 
 /**
@@ -22,6 +23,14 @@ const addedToOrder = newOrder => {
     newOrder
   }
 }
+
+const removedFromOrder = order => {
+  return {
+    type: REMOVED_FROM_ORDER,
+    order
+  }
+}
+
 const gotUnfulfilledOrder = unfulfilledOrder => {
   return {
     type: GOT_UNFULFILLED_ORDER,
@@ -32,11 +41,24 @@ const gotUnfulfilledOrder = unfulfilledOrder => {
 /**
  * THUNK CREATORS
  */
-
+// getState
 export const addToOrder = (productId, userId) => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/users/${userId}/orders`, {productId})
+    const {data} = await axios.put(`/api/users/${userId}/orders/add`, {
+      productId
+    })
     dispatch(addedToOrder(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const removeFromOrder = (productId, userId) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/users/${userId}/orders/remove`, {
+      productId
+    })
+    dispatch(removedFromOrder(data))
   } catch (err) {
     console.error(err)
   }

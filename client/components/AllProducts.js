@@ -9,15 +9,14 @@ export class AllProducts extends Component {
   }
 
   render() {
-    const allProducts = this.props.allProducts
+    const {allProducts} = this.props
     return (
       <div className="container">
         <div className="row">
-          {allProducts
-            ? allProducts.map(product => (
-                <ProductCard key={product.name} product={product} />
-              ))
-            : null}
+          {allProducts &&
+            allProducts.map(product => (
+              <ProductCard key={product.name} product={product} />
+            ))}
         </div>
       </div>
     )
@@ -30,10 +29,6 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getAllProducts: () => dispatch(getAllProducts())
-  }
-}
+const mapDispatchToProps = {getAllProducts}
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {getSingleUser} from '../store/user-for-user'
 import {getUnfulfilledOrder} from '../store/order'
 // import {Link} from 'react-router-dom'
-import UnfulfilledOrder from './UnfulfilledOrder'
+import Cart from './Cart'
 
 export class SingleUser extends Component {
   constructor() {
@@ -16,6 +16,7 @@ export class SingleUser extends Component {
   }
 
   componentDidMount() {
+    // state.user
     const userId = this.props.match.params.userId
     this.props.getSingleUser(userId)
     this.props.getUnfulfilledOrder(userId)
@@ -59,7 +60,7 @@ export class SingleUser extends Component {
         </button>
         <pre>
           {this.state.showCart ? (
-            <UnfulfilledOrder order={this.props.unfulfilledOrder[0]} />
+            <Cart order={this.props.unfulfilledOrder[0]} />
           ) : null}
         </pre>
       </div>
@@ -68,6 +69,7 @@ export class SingleUser extends Component {
 }
 
 const mapStateToProps = state => {
+  // state.user
   return {
     singleUser: state.singleUser,
     userId: state.user.id,
