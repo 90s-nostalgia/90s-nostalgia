@@ -37,6 +37,7 @@ export class SingleUser extends Component {
 
   render() {
     const singleUser = this.props.singleUser
+
     return (
       <div>
         {singleUser ? (
