@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Order, OrderProduct} = require('../db/models')
+const {User, Order, OrderProduct, Product} = require('../db/models')
 module.exports = router
 
 // router.use('/:id/orders', require('./orders'))
@@ -84,7 +84,7 @@ router.get('/:id/orders', async (req, res, next) => {
         fulfilled: false
       },
       include: {
-        model: OrderProduct
+        model: Product
       }
     })
     res.json(unfulfilledOrder)
