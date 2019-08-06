@@ -42,11 +42,18 @@ const gotUnfulfilledOrder = unfulfilledOrder => {
  * THUNK CREATORS
  */
 // getState
-export const addToOrder = (productId, userId) => async dispatch => {
+export const addToOrder = (
+  productId,
+  userId,
+  updateQuantity
+) => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/users/${userId}/orders/add`, {
-      productId
+    console.log('thunk:', updateQuantity)
+    const {data} = await axios.put(`/api/users/${userId}/orders`, {
+      productId,
+      updateQuantity
     })
+    console.log('thunk data:', data)
     dispatch(addedToOrder(data))
   } catch (err) {
     console.error(err)
