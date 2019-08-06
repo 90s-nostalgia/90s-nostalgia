@@ -43,7 +43,7 @@ router.get(
       next(err)
     }
   }
-})
+)
 
 router.put(
   '/:id/orders',
@@ -53,7 +53,8 @@ router.put(
   async (req, res, next) => {
     try {
       // checks if user already has an unfulfilled cart
-      console.log(req.user)
+      console.log('route:', req.body.updateQuantity)
+      const updateQuantity = req.body.updateQuantity
       const newOrder = await Order.findOrCreate({
         where: {
           userId: req.user.id,
@@ -67,7 +68,7 @@ router.put(
           productId: req.body.productId
         }
       })
-      // if not in order, add to order
+      // if not in order & updateQuantity is truthy, add to order
       if (!isOrderProduct) {
         const newOrderProductInstance = await OrderProduct.create({
           orderId: newOrder[0].dataValues.id,
@@ -77,11 +78,21 @@ router.put(
         res.status(201).json(newOrderProductInstance)
         // if the product already is in the order, increment quantity by 1
       } else {
-        const incrementedQuantity = isOrderProduct.quantity + 1
-        const updatedOrderProductInstance = await isOrderProduct.update({
-          quantity: incrementedQuantity
-        })
-        res.json(updatedOrderProductInstance)
+        const incrementedQuantity = isOrderProduct.quantity + updateQuantity
+        if (incrementedQuantity > 0) {
+          const updatedOrderProductInstance = await isOrderProduct.update({
+            quantity: incrementedQuantity
+          })
+          res.json(updatedOrderProductInstance)
+        } else {
+          const deletedOrderProductInstance = await isOrderProduct.destroy({
+            where: {
+              productId: req.body.productId,
+              quantity: 0
+            }
+          })
+          res.send(deletedOrderProductInstance)
+        }
       }
     } catch (error) {
       next(error)
