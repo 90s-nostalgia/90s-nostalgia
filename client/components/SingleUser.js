@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../store/user-for-user'
 import {getUnfulfilledOrder} from '../store/order'
+import {fulfillOrder} from '../store/order'
+
 // import {Link} from 'react-router-dom'
 import Cart from './Cart'
 
@@ -23,6 +25,13 @@ export class SingleUser extends Component {
   }
 
   handleClick(event) {
+    const userId = this.props.match.params.userId
+    event.preventDefault()
+    this.props.getSingleUser(userId)
+    //this is going to change so that it fires a getCart thunk
+  }
+  /// fix this Ani
+  checkOut(event) {
     const userId = this.props.match.params.userId
     event.preventDefault()
     this.props.getSingleUser(userId)
@@ -59,9 +68,22 @@ export class SingleUser extends Component {
           View Cart
         </button>
         <pre>
-          {this.state.showCart ? (
-            <Cart order={this.props.unfulfilledOrder[0] || {}} />
-          ) : null}
+          {this.state.showCart && (
+            <div>
+              <div>
+                <Cart order={this.props.unfulfilledOrder[0] || {}} />
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={this.checkOut}
+                >
+                  Check Out
+                </button>
+              </div>
+            </div>
+          )}
         </pre>
       </div>
     )
@@ -80,7 +102,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleUser: anonymousData => dispatch(getSingleUser(anonymousData)),
-    getUnfulfilledOrder: userId => dispatch(getUnfulfilledOrder(userId))
+    getUnfulfilledOrder: userId => dispatch(getUnfulfilledOrder(userId)),
+    fulfillOrder: userId => dispatch(fulfillOrder(userId))
   }
 }
 

@@ -6,6 +6,7 @@ import axios from 'axios'
 const ADDED_TO_ORDER = 'ADDED_TO_ORDER'
 const REMOVED_FROM_ORDER = 'REMOVED_FROM_ORDER'
 const GOT_UNFULFILLED_ORDER = 'GOT_UNFULFILLED_ORDER'
+const FULFILLED_ORDER = 'FULFILLED_ORDER'
 
 /**
  * INITIAL STATE
@@ -33,6 +34,13 @@ const gotUnfulfilledOrder = unfulfilledOrder => {
   return {
     type: GOT_UNFULFILLED_ORDER,
     unfulfilledOrder
+  }
+}
+
+const fulfilledOrder = order => {
+  return {
+    type: FULFILLED_ORDER,
+    order
   }
 }
 
@@ -78,6 +86,15 @@ export const getUnfulfilledOrder = userId => async dispatch => {
   }
 }
 
+export const fulfillOrder = userId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/users/${userId}/orders/`)
+    dispatch(fulfilledOrder(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -86,10 +103,13 @@ export default function(state = defaultOrder, action) {
     case ADDED_TO_ORDER:
       return {
         ...state,
+        // revisit if we got time
         unfulfilledOrder: [...state.unfulfilledOrder, action.newOrder]
       }
     case GOT_UNFULFILLED_ORDER:
       return {...state, unfulfilledOrder: action.unfulfilledOrder}
+    case FULFILLED_ORDER:
+      return {...state, unfulfilledOrder: action.order}
     default:
       return state
   }
