@@ -31,6 +31,7 @@ export class SingleProduct extends Component {
   }
 
   render() {
+    console.log(this.props.order)
     const singleProduct = this.props.singleProduct
     return (
       <div>
@@ -59,7 +60,8 @@ export class SingleProduct extends Component {
 const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
-    userId: state.user.id
+    userId: state.user.id,
+    order: state.order.unfulfilledOrder
   }
 }
 
