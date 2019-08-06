@@ -60,7 +60,7 @@ export class SingleUser extends Component {
         </button>
         <pre>
           {this.state.showCart ? (
-            <Cart order={this.props.unfulfilledOrder[0]} />
+            <Cart order={this.props.unfulfilledOrder[0] || {}} />
           ) : null}
         </pre>
       </div>
