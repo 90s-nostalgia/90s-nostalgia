@@ -13,9 +13,9 @@ const Cart = props => {
       {products && (
         <div key={products.id}>
           <div>
-            products.map(product => (
-            <CartItem key={product.name} product={product} />
-            ))
+            {products.map(product => (
+              <CartItem key={product.name} product={product} />
+            ))}
           </div>
         </div>
       )}

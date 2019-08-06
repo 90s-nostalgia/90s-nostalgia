@@ -10,7 +10,7 @@ const GOT_UNFULFILLED_ORDER = 'GOT_UNFULFILLED_ORDER'
 /**
  * INITIAL STATE
  */
-const defaultOrder = []
+const defaultOrder = {unfulfilledOrder: []}
 
 /**
  * ACTION CREATORS
