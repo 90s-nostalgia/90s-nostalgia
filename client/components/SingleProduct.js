@@ -19,12 +19,18 @@ export class SingleProduct extends Component {
   handleClick(event) {
     const productId = this.props.match.params.productId
     const userId = this.props.userId
+    let updateQuantity = 0
     event.preventDefault()
-    this.props.addToOrder(productId, userId)
+    console.log(event.target.value)
+    if (event.target.value === 'remove') {
+      updateQuantity = -1
+    } else {
+      updateQuantity = +1
+    }
+    this.props.addToOrder(productId, userId, updateQuantity)
   }
 
   render() {
-    console.log('these are the props', this.props)
     const singleProduct = this.props.singleProduct
     return (
       <div>
@@ -39,7 +45,8 @@ export class SingleProduct extends Component {
 
         <button
           type="button"
-          className="btn-primary"
+          className="btn btn-primary"
+          value="remove"
           onClick={this.handleClick}
         >
           Remove
@@ -59,7 +66,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: productId => dispatch(getSingleProduct(productId)),
-    addToOrder: (productId, userId) => dispatch(addToOrder(productId, userId))
+    addToOrder: (productId, userId, updateQuantity) =>
+      dispatch(addToOrder(productId, userId, updateQuantity))
   }
 }
 
