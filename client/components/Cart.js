@@ -9,13 +9,16 @@ const Cart = props => {
   const products = props.order.products //not semantic, but shrug
   console.log('products', products)
   return (
-    <div key={products.id}>
-      <div>
-        {products &&
-          products.map(product => (
+    <div>
+      {products && (
+        <div key={products.id}>
+          <div>
+            products.map(product => (
             <CartItem key={product.name} product={product} />
-          ))}
-      </div>
+            ))
+          </div>
+        </div>
+      )}
     </div>
   )
 }

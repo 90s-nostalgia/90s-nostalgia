@@ -46,7 +46,7 @@ router.get(
 )
 
 router.put(
-  '/:id/orders',
+  '/:id/orders', //to orders/1
   (req, res, next) => {
     if (req.user.isAdmin || req.user.id == req.params.id) next()
   },
@@ -54,7 +54,8 @@ router.put(
     try {
       // checks if user already has an unfulfilled cart
       console.log('route:', req.body.updateQuantity)
-      const updateQuantity = req.body.updateQuantity
+      //make sure this is an integer, so put a plus for type coercion
+      const updateQuantity = +req.body.updateQuantity
       const newOrder = await Order.findOrCreate({
         where: {
           userId: req.user.id,
@@ -69,7 +70,9 @@ router.put(
         }
       })
       // if not in order & updateQuantity is truthy, add to order
-      if (!isOrderProduct) {
+      console.log(isOrderProduct)
+
+      if (!isOrderProduct && updateQuantity > 0) {
         const newOrderProductInstance = await OrderProduct.create({
           orderId: newOrder[0].dataValues.id,
           productId: req.body.productId,
@@ -92,7 +95,7 @@ router.put(
             }
           })
           res.send(deletedOrderProductInstance)
-        }
+        } //instance method on the model that would be called on the order, containsProduct(productId)
       }
     } catch (error) {
       next(error)
