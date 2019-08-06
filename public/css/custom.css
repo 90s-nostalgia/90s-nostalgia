@@ -1,3 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Freckle+Face&display=swap');
+
+body {
+  background-image: url(https://i.ibb.co/n1nq6HX/bg.png);
+}
+
+.container {
+  background-color: #ffffff;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 2em;
+  font-family: 'Freckle Face', cursive;
+}
+
 .navbar-nav {
   display: inline-flex;
+}
+
+/* All Products View */
+img {
+  margin: 1em;
+  max-width: 200px;
 }
