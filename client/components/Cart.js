@@ -5,15 +5,16 @@ import React, {Component} from 'react'
 import CartItem from './CartItem'
 
 const Cart = props => {
-  const products = props.order.products
+  console.log('props.order', props.order)
+  const products = props.order.products //not semantic, but shrug
+  console.log('products', products)
   return (
     <div key={products.id}>
       <div>
-        {products
-          ? products.map(product => (
-              <CartItem key={product.name} product={product} />
-            ))
-          : null}
+        {products &&
+          products.map(product => (
+            <CartItem key={product.name} product={product} />
+          ))}
       </div>
     </div>
   )
