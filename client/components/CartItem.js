@@ -17,7 +17,6 @@ import {removeFromOrder} from '../store/order'
 
 const CartItem = props => {
   const product = props.product
-  console.log(product)
   return (
     <div key={product.id}>
       <div className="col-sm">

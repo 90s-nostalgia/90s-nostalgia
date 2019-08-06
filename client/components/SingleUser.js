@@ -13,7 +13,7 @@ export class SingleUser extends Component {
     this.state = {
       showCart: false
     }
-    this.handleClick = this.handleClick.bind(this)
+    this.checkOut = this.checkOut.bind(this)
     this.showCart = this.showCart.bind(this)
   }
 
@@ -24,18 +24,10 @@ export class SingleUser extends Component {
     this.props.getUnfulfilledOrder(userId)
   }
 
-  handleClick(event) {
-    const userId = this.props.match.params.userId
-    event.preventDefault()
-    this.props.getSingleUser(userId)
-    //this is going to change so that it fires a getCart thunk
-  }
-  /// fix this Ani
   checkOut(event) {
     const userId = this.props.match.params.userId
     event.preventDefault()
-    this.props.getSingleUser(userId)
-    //this is going to change so that it fires a getCart thunk
+    this.props.fulfillOrder(userId)
   }
 
   showCart() {

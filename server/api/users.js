@@ -104,23 +104,26 @@ router.put(
 )
 
 router.put(
-  '/:id/orders/:orderId',
+  '/:id/orders/checkout',
   (req, res, next) => {
     if (req.user.isAdmin || req.user.id == req.params.id) next()
   },
   async (req, res, next) => {
     try {
-      // checks if user already has an unfulfilled cart
-      const fulfilledOrder = await Order.findAll({
-        where: {
-          userId: req.user.id,
-          fulfilled: false
+      const fulfilledOrder = await Order.update(
+        {
+          fulfilled: true
+        },
+        {
+          where: {
+            userId: req.user.id,
+            fulfilled: false
+          }
         }
-      })
-      const checkedOutOrder = await fulfilledOrder.update({
-        fulfilled: true
-      })
-      res.json(checkedOutOrder)
+      )
+
+      console.log(fulfilledOrder)
+      res.json(fulfilledOrder)
     } catch (err) {
       next(err)
     }

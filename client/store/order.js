@@ -88,7 +88,10 @@ export const getUnfulfilledOrder = userId => async dispatch => {
 
 export const fulfillOrder = userId => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/users/${userId}/orders/`)
+    console.log('hi ani', userId)
+    const {data} = await axios.put(`/api/users/${userId}/orders/checkout`)
+    console.log('hi dan')
+
     dispatch(fulfilledOrder(data))
   } catch (err) {
     console.error(err)
