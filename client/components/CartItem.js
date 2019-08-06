@@ -27,9 +27,6 @@ const CartItem = props => {
             ${product.price / 100}
             <br />
             {product.orderProduct.quantity}
-            <button type="button" className="btn-primary">
-              Delete
-            </button>
           </div>
         </div>
       </div>
