@@ -17,7 +17,6 @@ import {removeFromOrder} from '../store/order'
 
 const CartItem = props => {
   const product = props.product
-  console.log(product)
   return (
     <div key={product.id}>
       <div className="col-sm">
@@ -28,9 +27,6 @@ const CartItem = props => {
             ${product.price / 100}
             <br />
             {product.orderProduct.quantity}
-            <button type="button" className="btn-primary">
-              Delete
-            </button>
           </div>
         </div>
       </div>

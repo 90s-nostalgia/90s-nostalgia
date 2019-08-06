@@ -103,6 +103,33 @@ router.put(
   }
 )
 
+router.put(
+  '/:id/orders/checkout',
+  (req, res, next) => {
+    if (req.user.isAdmin || req.user.id == req.params.id) next()
+  },
+  async (req, res, next) => {
+    try {
+      const fulfilledOrder = await Order.update(
+        {
+          fulfilled: true
+        },
+        {
+          where: {
+            userId: req.user.id,
+            fulfilled: false
+          }
+        }
+      )
+
+      console.log(fulfilledOrder)
+      res.json(fulfilledOrder)
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
 router.get(
   '/:id/orders',
   (req, res, next) => {

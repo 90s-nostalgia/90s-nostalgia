@@ -5,9 +5,7 @@ import React, {Component} from 'react'
 import CartItem from './CartItem'
 
 const Cart = props => {
-  console.log('props.order', props.order)
   const products = props.order.products //not semantic, but shrug
-  console.log('products', products)
   return (
     <div>
       {products && (
