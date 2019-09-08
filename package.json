@@ -18,9 +18,9 @@
     "postinstall": "touch secrets.js",
     "seed": "node script/seed.js",
     "start": "node server",
-    "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
+    "start-dev": "cross-env NODE_ENV='development' npm run build-client-watch & cross-env NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
-    "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register"
+    "test": "cross-env NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register"
   },
   "husky": {
     "hooks": {
@@ -50,7 +50,7 @@
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
-    "pg": "^7.9.0",
+    "pg": "^7.12.0",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -60,7 +60,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^5.3.1",
+    "sequelize": "^5.12.3",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
@@ -83,6 +83,7 @@
     "babel-loader": "^8.0.5",
     "bootstrap": "^4.3.1",
     "chai": "^4.2.0",
+    "cross-env": "^5.2.1",
     "css-loader": "^3.1.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
